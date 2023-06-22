@@ -1,15 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://bb7qm7qhv03n5"]
+[gd_scene load_steps=5 format=3 uid="uid://bb7qm7qhv03n5"]
 
+[ext_resource type="Script" path="res://Player.cs" id="1_7x227"]
 [ext_resource type="Texture2D" uid="uid://ct8wqjjtkif15" path="res://placeholder.png" id="1_7xdih"]
-[ext_resource type="Script" path="res://Player.gd" id="1_024sk"]
+[ext_resource type="Script" path="res://addons/smoothing/smoothing_2d.gd" id="2_t8cuv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rf45c"]
+radius = 8.0
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_024sk")
+motion_mode = 1
+script = ExtResource("1_7x227")
+MaxSpeed = 150.0
+Acceleration = 15.75
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rf45c")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Smoothing2D" type="Node2D" parent="."]
+script = ExtResource("2_t8cuv")
+
+[node name="FollowCamera" type="Camera2D" parent="Smoothing2D"]
+unique_name_in_owner = true
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="Face" type="Sprite2D" parent="Smoothing2D"]
+unique_name_in_owner = true
 texture = ExtResource("1_7xdih")
