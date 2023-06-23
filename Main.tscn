@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dudprv6yoqbko"]
+[gd_scene load_steps=7 format=3 uid="uid://dudprv6yoqbko"]
 
 [ext_resource type="PackedScene" uid="uid://bb7qm7qhv03n5" path="res://Player.tscn" id="1_snr3o"]
 [ext_resource type="Texture2D" uid="uid://ct8wqjjtkif15" path="res://placeholder.png" id="2_1qhvr"]
 [ext_resource type="Texture2D" uid="uid://bo4rhrs6jwhjd" path="res://placeholderrepeat.png" id="3_s8ixh"]
+[ext_resource type="Script" path="res://addons/smoothing/smoothing_2d.gd" id="4_2giso"]
+[ext_resource type="PackedScene" uid="uid://b2t8vnh445kmr" path="res://Projectile.tscn" id="5_p61kv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dihlx"]
 size = Vector2(638, 16)
@@ -76,3 +78,21 @@ stretch_mode = 1
 
 [node name="Player" parent="." instance=ExtResource("1_snr3o")]
 position = Vector2(319, 181)
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2(26, 88)
+
+[node name="Smoothing2D" type="Node2D" parent="StaticBody2D5"]
+script = ExtResource("4_2giso")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D5/Smoothing2D"]
+modulate = Color(0.498039, 0.352941, 0.2, 1)
+position = Vector2(362, 0)
+texture = ExtResource("2_1qhvr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
+position = Vector2(309, 0)
+shape = SubResource("RectangleShape2D_dihlx")
+
+[node name="Projectile" parent="." instance=ExtResource("5_p61kv")]
+position = Vector2(318, 120)

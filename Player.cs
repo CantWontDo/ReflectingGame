@@ -32,19 +32,16 @@ public partial class Player : CharacterBody2D
 
     public Node2D _sprite;
 
+    public CollisionShape2D _collisionBox;
+
+    public Area2D _reflectBox;
+
     public override void _Ready()
     {
         _followCamera = GetNode<Camera2D>("FollowCamera");
-        _sprite = GetChild(1).GetNode<Sprite2D>("Face");
-        GD.Print(_sprite.IsInsideTree());
-        if (_sprite != null) 
-        {
-            GD.Print("success");
-        }
-        else 
-        {
-            GD.Print("failure");
-        }
+        _sprite = GetNode("VisualSmooth").GetNode<Sprite2D>("Face");
+        _collisionBox = GetNode<CollisionShape2D>("Collision");
+        _reflectBox = GetNode<Area2D>("ReflectArea");
     }
 
     public override async void _Process(double delta)
@@ -58,15 +55,17 @@ public partial class Player : CharacterBody2D
             IsReflecting = false;
         }
 
-        GD.Print(IsReflecting);
-
         if (IsReflecting) 
         {
-            _sprite.Visible = false;
+            _sprite.Modulate = new Color(Colors.Red);
+            _reflectBox.Modulate = new Color(Colors.MediumVioletRed);
+            _collisionBox.Disabled = true;
 
         }
         else {
-            _sprite.Visible = true;
+            _sprite.Modulate = new Color(Colors.SeaGreen);
+            _reflectBox.Modulate = new Color(Colors.White);
+            _collisionBox.Disabled = false;
         }
     }
 
@@ -95,6 +94,10 @@ public partial class Player : CharacterBody2D
         
         Velocity = _currentVelocity;
         MoveAndSlide();
+    }
+
+    private void Reflect() {
+
     }
 
     private void Accelerate(float dt) 

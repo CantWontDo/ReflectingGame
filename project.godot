@@ -23,7 +23,7 @@ window/size/viewport_height=360
 window/vsync/vsync_mode=2
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
-window/stretch/scale=2.0
+window/stretch/scale=3.0
 
 [dotnet]
 

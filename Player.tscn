@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bb7qm7qhv03n5"]
+[gd_scene load_steps=6 format=3 uid="uid://bb7qm7qhv03n5"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_7x227"]
 [ext_resource type="Texture2D" uid="uid://ct8wqjjtkif15" path="res://placeholder.png" id="1_7xdih"]
@@ -7,24 +7,39 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rf45c"]
 radius = 8.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_x1y6f"]
+radius = 12.0
+
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_7x227")
 MaxSpeed = 150.0
 Acceleration = 15.75
+metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_rf45c")
-
-[node name="Smoothing2D" type="Node2D" parent="."]
+[node name="VisualSmooth" type="Node2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("2_t8cuv")
+target = NodePath("..")
+metadata/_edit_group_ = true
 
-[node name="FollowCamera" type="Camera2D" parent="Smoothing2D"]
+[node name="FollowCamera" type="Camera2D" parent="VisualSmooth"]
 unique_name_in_owner = true
 zoom = Vector2(0.5, 0.5)
 position_smoothing_enabled = true
-position_smoothing_speed = 10.0
+position_smoothing_speed = 12.0
 
-[node name="Face" type="Sprite2D" parent="Smoothing2D"]
+[node name="Face" type="Sprite2D" parent="VisualSmooth"]
 unique_name_in_owner = true
 texture = ExtResource("1_7xdih")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rf45c")
+
+[node name="ReflectArea" type="Area2D" parent="." groups=["reflecting"]]
+unique_name_in_owner = true
+priority = 10.0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ReflectArea"]
+shape = SubResource("CircleShape2D_x1y6f")
